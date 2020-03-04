@@ -1,0 +1,133 @@
+---
+title: "RStudio::conf Recap"
+subtitle: "CCHMC RUG - March 2020"
+author: "Erika Rasnick"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    highlight: pygments
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+
+library(tidyverse)
+library(knitr)
+```
+
+# The [`{ggtext}`](https://github.com/wilkelab/ggtext) package
+
+> rich-text (basic HTML and Markdown) support for ggplot2 (plot titles, subtitles, axis labels, legends, etc)
+
+* Not on CRAN yet
+* Must have the development version of `ggplot2`
+
+### Example 1
+
+```{r}
+library(ggtext)
+
+ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
+  geom_point(size = 3) +
+  scale_color_manual(
+    name = NULL,
+    values = c(setosa = "#0072B2", virginica = "#009E73", versicolor = "#D55E00"),
+    labels = c(
+      setosa = "<i style='color:#0072B2'>I. setosa</i>",
+      virginica = "<i style='color:#009E73'>I. virginica</i>",
+      versicolor = "<i style='color:#D55E00'>I. versicolor</i>")
+  ) +
+  labs(
+    title = "**Fisher's *Iris* dataset**  
+    <span style='font-size:11pt'>Sepal width vs. sepal length for three *Iris*
+    species</span>",
+    x = "Sepal length (cm)", y = "Sepal width (cm)"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_markdown(lineheight = 1.1),
+    legend.text = element_markdown(size = 11)
+  )
+```
+
+### Example 2
+
+```{r}
+labels <- c(
+  setosa = "<img src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Iris_setosa.JPG/180px-Iris_setosa.JPG'
+    width='100' /><br>*I. setosa*",
+  virginica = "<img src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Iris_virginica_-_NRCS.jpg/320px-Iris_virginica_-_NRCS.jpg'
+    width='100' /><br>*I. virginica*",
+  versicolor = "<img src='https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/20140427Iris_versicolor1.jpg/320px-20140427Iris_versicolor1.jpg'
+    width='100' /><br>*I. versicolor*"
+)
+
+ggplot(iris, aes(Species, Sepal.Width)) +
+  geom_boxplot() +
+  scale_x_discrete(
+    name = NULL,
+    labels = labels
+  ) +
+  theme(
+    axis.text.x = element_markdown(color = "black", size = 11)
+  )
+```
+
+For more examples and to hear about the motivation behind this package, you can watch Claus Wilke's [talk](https://resources.rstudio.com/rstudio-conf-2020/spruce-up-your-ggplot2-visualizations-with-formatted-text-claus-wilke).
+
+# What They Forgot To Teach You About R
+
+![](/Users/RASV5G/OneDrive - cchmc/RUG/rstudio_conf_recap/what_did_they_forget.png)
+
+
+* Project-oriented workflows
+    + Dedicated project directories with organized structure (importance of file names)
+    + RStudio Project
+    + Git/GitHub (integration with RStudio, great for collaboration, lots to learn but only need to know a little to get started)
+
+* Tips for working with file paths
+    + Don't use `setwd()` at the top of scripts. Instead use relative file paths. 
+    + `{fs}` and `{home}` (specifically for working within a project)
+    
+```{r}
+fs::path_home("tmp/test.csv")
+```
+   
+```{r, eval=F}
+ggsave(here::here("figs", "figure1.png"))
+```
+
+* Debugging Code
+    + `traceback()`: prints the sequence of calls that lead to the error
+    + put `print()` or `str()` statements throughout your functions
+    + `browser()`: Interrupt the execution of an expression and allow the inspection of the environment where browser was called from.
+
+* Personal R Administration
+    +  `.Renviron` (good for API keys)
+    + `.Rprofile`
+
+* Iteration with `{purrr}`
+
+```{r}
+library(purrr)
+
+mtcars %>%
+  group_by(cyl) %>% 
+  nest() %>% 
+  mutate(lm = map(data, ~lm(mpg ~ wt, data = .x)),
+         summary = map(lm, summary), 
+         r_squared = map_dbl(summary, "r.squared"))
+```
+
+
+### Resources
+
+* [WTF online book](https://rstats.wtf/)
+* [RStudio::conf WTF workshop website](https://rstudio-conf-2020.github.io/what-they-forgot/)
+* [Happy Git with R online book](https://happygitwithr.com/)
+* [Good enough practices in scientific computing article](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510)
+
+
+
