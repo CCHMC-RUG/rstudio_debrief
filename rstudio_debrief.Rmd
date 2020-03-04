@@ -1,0 +1,81 @@
+---
+title: "rstudio::conf2020 Summary"
+author: "CCHMC RUG"
+date: "3/4/2020"
+output: 
+  html_document:
+    theme: journal
+    highlight: breezedark
+    toc: FALSE
+    toc_float: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## rstudio::conf2020
+
+The 2020 R Studio Conference in SF was held late January.  If you weren't able to go in person, you are in luck!  All presentations that were given can be found here:
+
+<div align="center">https://resources.rstudio.com/rstudio-conf-2020
+<div align="left">
+
+### Some highlights...
+
+We encourage you to look through the talks on your own.  There videos of the keynote presentations and numerous other talks on data visualization, R Shiny, workflow, and how R is used in medicine.  We picked a few talks that were especially relevant and interesting though.
+
+<br />
+
+#### Keynote - JJ Allaire
+
+<div align="center">https://resources.rstudio.com/rstudio-conf-2020/rstudio-open-source-software-for-data-science-j-j-allaire
+
+<div align="left">
+JJ Allaire (CEO/creator of R Studio) gives a presentation on the history of R Studio as a corporation and the future of the company.  The main theme of the presentation is that R is now a certified Public Benefit Corporation or B-Corp.  From JJ Allaire:
+
+<div align="center">*"By becoming a PBC, we have codified our open-source mission into our charter, which means that our corporate decisions must both align with this mission, as well as balance the interests of community, customers, employees, and shareholders. As a PBC, R Studio will publish an annual report that describes the public benefit we have created, along with how we seek to provide public benefits in the future."*
+
+<div align="left">
+The annual report can be found here: https://rstudio.com/about/pbc-report/.
+
+<br />
+
+<div align="left">
+#### `shinymeta`
+
+
+`shinymeta` is a package that allows you to capture logic and R code in a Shiny app and make it visible. `shinymeta` also includes functions to allow users to download your code and results to replicate your work.
+
+The package was built to enhance the reproducibility of Shiny apps. Because the operations that power a Shiny app occur under the hood, transparency can be lost.  The author (Carson Sievert) makes the case to use `shinymeta` by suggesting a few benefits as a result of making your app more transparent:
+
+- *Reassurance:* Making your code available can reassure others (and yourself) that your app (i.e. model, code) is operating correctly.
+
+- *Education:* Instructors may use Shiny and `shinymeta` to demonstrate R functions, a statistical test, or even Shiny itself.  Users can implement the code from `shinymeta` into their own work.
+
+- *Enabling:*  You are a genius, but maybe you missed something or could add a new feature to help the end user.  Making your logic and code visible will enable and encourage others to modify and build upon your work.
+
+- *Documentation:* Bundling your code and output can help other people connect the dots between your code execution and results.  This is especially important if your app has modeling or performs an exploratory analysis.
+
+`shinymeta` information can be documentation and examples can be found here: https://rstudio.github.io/shinymeta/.
+
+Carson Sievert's talk can be found here: https://resources.rstudio.com/rstudio-conf-2020/reproducible-shiny-apps-with-shinymeta-dr-carson-sievert
+
+<br />
+
+#### `bootstraplib`
+
+The `bootstraplib` package allows you to greatly enhance the styling for Shiny and R Markdown documents. From the creators:
+
+<div align="center"> *"The bootstraplib R package provides tools for compiling and working with Bootstrap Sass, making it possible to style shiny apps and rmarkdown documents directly from R (via sass) instead of writing raw CSS and HTML."*
+
+<div align="left">
+
+While some level of customization is by selecting a theme for your Shiny or R Markdown document by selecting a theme (https://bootswatch.com/), added customization requires modifying/creating the CSS (Cascading Style Sheets) styling, which controls the presentation (colors, fonts, etc.) of the HTML document.  "Sass" is a CSS extension language.
+
+**`bootstraplib` is currently still in development, but is available for download through Github.**
+
+Instructions for downloading the packages and tutorials can be found here: https://rstudio.github.io/bootstraplib/.
+
+
+
